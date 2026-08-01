@@ -1,0 +1,34 @@
+# Downloaded app binaries — don't commit these
+*.apk
+*.app
+*.ipa
+*.app.zip
+# …except the shared demo-app binaries committed under app/ (self-contained labs)
+!app/DemoApp-v1.0.0.apk
+!app/DemoApp-v1.1.0-debug-ios.app.zip
+
+# Generated run output that shouldn't be committed
+report.json
+*.log
+.DS_Store
+
+# Node / TS lab artifacts
+node_modules/
+dist/
+*.tsbuildinfo
+
+# taqwright output (traces, videos, HTML report)
+test-results/
+playwright-report/
+taqwright-report/
+blob-report/
+all-blobs/
+artifacts/
+*.spec.ts.snapshot
+
+# Claude Code — personal overrides & local MCP creds
+.claude/settings.local.json
+.mcp.local.json
+
+# Secrets / local env
+.env

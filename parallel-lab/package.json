@@ -1,0 +1,22 @@
+{
+  "name": "parallel-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "§9 Parallelism: workers, device pool, autoDiscover (4 local Android projects)",
+  "type": "module",
+  "scripts": {
+    "test": "taqwright test",
+    "test:auto1": "taqwright test --project android-auto-1",
+    "test:auto2": "taqwright test --project android-auto-2",
+    "test:pool2": "taqwright test --project android-pool-2",
+    "test:single": "taqwright test --project android-single",
+    "doctor": "taqwright doctor",
+    "devices": "taqwright devices",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "taqwright": "npm:@taqwright/taqwright@^0.1.0-beta.2",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

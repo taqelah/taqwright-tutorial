@@ -1,0 +1,4 @@
+[
+  { "label": "standard user", "username": "emma@demoapp.com", "password": "10203040", "expectHome": true },
+  { "label": "locked account", "username": "locked@demoapp.com", "password": "10203040", "expectHome": false }
+]

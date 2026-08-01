@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="aDark" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#5b6066"/>
+    </marker>
+    <marker id="aGreen" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#4e9e2e"/>
+    </marker>
+    <marker id="aRed" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#e23b3b"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="650" fill="#ffffff"/>
+
+  <!-- ===== Shared runner band (KEPT) ===== -->
+  <rect x="60" y="22" width="880" height="94" rx="14" fill="#2b3036" stroke="#0f1316" stroke-width="2"/>
+  <rect x="812" y="34" width="104" height="30" rx="15" fill="#6abf3f"/>
+  <text x="864" y="54" text-anchor="middle" fill="#13310a" font-size="15" font-weight="bold">✓ KEPT</text>
+  <text x="86" y="62" fill="#ffffff" font-size="23" font-weight="bold">@playwright/test — the test runner, reused as-is</text>
+  <text x="86" y="93" fill="#c7ccd1" font-size="15.5">test ·  fixtures ·  reporters ·  config ·  expect()  ·  CLI</text>
+
+  <!-- connectors band → headers -->
+  <line x1="250" y1="116" x2="250" y2="150" stroke="#5b6066" stroke-width="2" marker-end="url(#aDark)"/>
+  <line x1="750" y1="116" x2="750" y2="150" stroke="#4e9e2e" stroke-width="2" marker-end="url(#aGreen)"/>
+
+  <!-- ===== Column headers ===== -->
+  <rect x="60" y="152" width="380" height="46" rx="10" fill="#fbe4e4" stroke="#e23b3b" stroke-width="2"/>
+  <text x="250" y="181" text-anchor="middle" fill="#b71c1c" font-size="20" font-weight="bold">Playwright · web  (swapped out)</text>
+
+  <rect x="560" y="152" width="380" height="46" rx="10" fill="#e9f6e0" stroke="#4e9e2e" stroke-width="2"/>
+  <text x="750" y="181" text-anchor="middle" fill="#2f6b16" font-size="20" font-weight="bold">taqwright · mobile  (active)</text>
+
+  <!-- center divider + rotated caption -->
+  <line x1="500" y1="300" x2="500" y2="566" stroke="#c2c8ce" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="500" y="430" text-anchor="middle" fill="#7a828a" font-size="14" font-weight="bold" transform="rotate(-90 500 430)">same runner — swapped automation backend</text>
+
+  <!-- swap arrow at the fixture level -->
+  <line x1="424" y1="237" x2="576" y2="237" stroke="#4e9e2e" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#aGreen)"/>
+  <text x="500" y="226" text-anchor="middle" fill="#4e9e2e" font-size="13" font-weight="bold">swap</text>
+
+  <!-- ===== LEFT stack (ghosted/red) ===== -->
+  <g opacity="0.92">
+    <rect x="80" y="212" width="340" height="50" rx="10" fill="#fdeaea" stroke="#e23b3b" stroke-width="1.6" stroke-dasharray="5 4"/>
+    <text x="250" y="243" text-anchor="middle" fill="#b71c1c" font-size="18" font-weight="bold">page  fixture</text>
+
+    <line x1="250" y1="262" x2="250" y2="285" stroke="#e23b3b" stroke-width="1.8" marker-end="url(#aRed)"/>
+    <rect x="80" y="287" width="340" height="50" rx="10" fill="#fdeaea" stroke="#e23b3b" stroke-width="1.6" stroke-dasharray="5 4"/>
+    <text x="250" y="312" text-anchor="middle" fill="#b71c1c" font-size="17" font-weight="bold">CDP</text>
+    <text x="250" y="329" text-anchor="middle" fill="#c0524f" font-size="12.5">Chrome DevTools Protocol</text>
+
+    <line x1="250" y1="337" x2="250" y2="360" stroke="#e23b3b" stroke-width="1.8" marker-end="url(#aRed)"/>
+    <rect x="80" y="362" width="340" height="50" rx="10" fill="#fdeaea" stroke="#e23b3b" stroke-width="1.6" stroke-dasharray="5 4"/>
+    <text x="250" y="393" text-anchor="middle" fill="#b71c1c" font-size="18" font-weight="bold">Chromium  browser</text>
+  </g>
+  <rect x="80" y="436" width="340" height="46" rx="10" fill="#e23b3b"/>
+  <text x="250" y="465" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="bold">✕ replaced by taqwright</text>
+
+  <!-- ===== RIGHT stack (green, active) ===== -->
+  <rect x="580" y="212" width="340" height="50" rx="10" fill="#6abf3f" stroke="#3f8a22" stroke-width="2"/>
+  <text x="750" y="243" text-anchor="middle" fill="#0f2c07" font-size="18" font-weight="bold">mobile  fixture</text>
+
+  <line x1="750" y1="262" x2="750" y2="285" stroke="#4e9e2e" stroke-width="2" marker-end="url(#aGreen)"/>
+  <rect x="580" y="287" width="340" height="50" rx="10" fill="#eef9e6" stroke="#4e9e2e" stroke-width="2"/>
+  <text x="750" y="312" text-anchor="middle" fill="#2f6b16" font-size="17" font-weight="bold">WebDriver protocol</text>
+  <text x="750" y="329" text-anchor="middle" fill="#5a8f3d" font-size="12.5">webdriver client  (mobile.raw)</text>
+
+  <line x1="750" y1="337" x2="750" y2="360" stroke="#4e9e2e" stroke-width="2" marker-end="url(#aGreen)"/>
+  <rect x="580" y="362" width="340" height="50" rx="10" fill="#eef9e6" stroke="#4e9e2e" stroke-width="2"/>
+  <text x="750" y="393" text-anchor="middle" fill="#2f6b16" font-size="18" font-weight="bold">Appium 3  server</text>
+
+  <line x1="750" y1="412" x2="750" y2="435" stroke="#4e9e2e" stroke-width="2" marker-end="url(#aGreen)"/>
+  <rect x="580" y="437" width="340" height="50" rx="10" fill="#eef9e6" stroke="#4e9e2e" stroke-width="2"/>
+  <text x="750" y="468" text-anchor="middle" fill="#2f6b16" font-size="16.5" font-weight="bold">UiAutomator2 / XCUITest  driver</text>
+
+  <line x1="750" y1="487" x2="750" y2="510" stroke="#4e9e2e" stroke-width="2" marker-end="url(#aGreen)"/>
+  <rect x="580" y="512" width="340" height="50" rx="10" fill="#2b3036" stroke="#0f1316" stroke-width="2"/>
+  <text x="750" y="543" text-anchor="middle" fill="#ffffff" font-size="17" font-weight="bold">📱 device — emulator / sim / real</text>
+
+  <!-- ===== Footnotes ===== -->
+  <text x="60" y="600" fill="#6b7280" font-size="13.5">Built on <tspan font-weight="bold" fill="#3b4148">@playwright/test ^1.60</tspan> + <tspan font-weight="bold" fill="#3b4148">webdriver ^9.27</tspan>  ·  not a fork — same runner, Appium backend.</text>
+  <text x="60" y="624" fill="#6b7280" font-size="13.5">Escape hatch: <tspan font-weight="bold" fill="#3b4148">mobile.raw</tspan> → the underlying WebDriver client.</text>
+</svg>
