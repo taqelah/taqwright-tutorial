@@ -1,0 +1,19 @@
+{
+  "name": "tutorial_03_config_lab_1_tests_and_timing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "tutorial_03_config_lab — 1_tests_and_timing mini-project",
+  "type": "module",
+  "scripts": {
+    "test": "taqwright test",
+    "test:report": "taqwright test && taqwright show-report",
+    "doctor": "taqwright doctor",
+    "devices": "taqwright devices",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "taqwright": "npm:@taqwright/taqwright@^0.1.0-beta.2",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

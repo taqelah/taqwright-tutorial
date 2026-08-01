@@ -1,0 +1,22 @@
+{
+  "name": "tutorial_12_cloud_debug_lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "run the page-object add-to-cart spec locally and on BrowserStack",
+  "type": "module",
+  "scripts": {
+    "test": "taqwright test",
+    "test:local": "taqwright test --project android",
+    "test:cloud-android": "taqwright test --project browserstack-android",
+    "test:cloud-ios": "taqwright test --project browserstack-ios",
+    "doctor": "taqwright doctor",
+    "devices": "taqwright devices",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "taqwright": "npm:@taqwright/taqwright@^0.1.0-beta.2",
+    "@types/node": "^22.0.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.6.0"
+  }
+}

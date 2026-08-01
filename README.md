@@ -29,7 +29,7 @@ device over the **WebDriver protocol → Appium 3 → UiAutomator2 / XCUITest**.
 
 ```bash
 nvm use 24                          # taqwright needs Node 24+
-cd setup-lab && npm install
+cd tutorial_01_setup_lab && npm install
 npx taqwright doctor                # verify env
 npx taqwright devices               # copy your AVD id into taqwright.config.ts
 npx taqwright test                  # run (Appium auto-starts)
@@ -46,30 +46,46 @@ Green? Work through the labs below in roughly that order.
 
 | Lab | Topic |
 |---|---|
-| [`setup-lab/`](setup-lab/) ✅ | Install, provision & verify the toolchain, then a smoke run to the login screen |
-| [`codegen-lab/`](codegen-lab/) 🚧 | Record a flow, rank locators, emit a spec |
-| [`config-lab/`](config-lab/) | §6 Configuration — six focused mini-projects, one per concept |
-| [`annotations-lab/`](annotations-lab/) | §7 Annotations — tags, metadata, `skip`/`fixme`/`fail`/`slow` |
-| [`global-setup-lab/`](global-setup-lab/) | §8 Global setup & teardown — a `globalSetup` module + a device setup project |
-| [`parallel-lab/`](parallel-lab/) | §9 Parallelism — workers, device pool, `autoDiscover` |
-| [`parameterize-lab/`](parameterize-lab/) | §10 Parameterize — one test per data row, inline + external JSON |
-| [`projects-lab/`](projects-lab/) | §14 Projects — an Android and an iOS device target, each with its own spec |
-| [`merge-report-lab/`](merge-report-lab/) | §15 Reporters — shard with the blob reporter, then `merge-reports` into one HTML |
-| [`retry-timeout-trace-lab/`](retry-timeout-trace-lab/) | §17–19 Retries (flaky flagging), timeouts, and the trace viewer |
-| [`page-object-lab/`](page-object-lab/) | Page Object pattern — one spec on both Android & iOS via base + child page classes |
-| [`cloud-debug-lab/`](cloud-debug-lab/) 🚧 | Run the page-object spec locally **and** on BrowserStack |
+| [`tutorial_01_setup_lab/`](tutorial_01_setup_lab/) ✅ | Install, provision & verify the toolchain, then a smoke run to the login screen |
+| [`tutorial_02_codegen_lab/`](tutorial_02_codegen_lab/) 🚧 | Record a flow, rank locators, emit a spec — **ships with no spec; you record it into `tests/`** |
+| [`tutorial_03_config_lab/`](tutorial_03_config_lab/) | §6 Configuration — six focused mini-projects, one per concept |
+| [`tutorial_04_annotations_lab/`](tutorial_04_annotations_lab/) | §7 Annotations — tags, metadata, `skip`/`fixme`/`fail`/`slow` |
+| [`tutorial_05_global_setup_lab/`](tutorial_05_global_setup_lab/) | §8 Global setup & teardown — a `globalSetup` module + a device setup project |
+| [`tutorial_06_parallel_lab/`](tutorial_06_parallel_lab/) | §9 Parallelism — workers, device pool, `autoDiscover` (the pinned projects need **your** AVD names) |
+| [`tutorial_07_parameterize_lab/`](tutorial_07_parameterize_lab/) | §10 Parameterize — one test per data row, inline + external JSON |
+| [`tutorial_08_projects_lab/`](tutorial_08_projects_lab/) | §14 Projects — an Android and an iOS device target, each with its own spec |
+| [`tutorial_09_merge_report_lab/`](tutorial_09_merge_report_lab/) | §15 Reporters — shard with the blob reporter, then `merge-reports` into one HTML |
+| [`tutorial_10_retry_timeout_trace_lab/`](tutorial_10_retry_timeout_trace_lab/) | §17–19 Retries (flaky flagging), timeouts, and the trace viewer |
+| [`tutorial_11_page_object_lab/`](tutorial_11_page_object_lab/) | Page Object pattern — one spec on both Android & iOS, one page object per screen (base + `Android*`/`Ios*` subclasses) |
+| [`tutorial_12_cloud_debug_lab/`](tutorial_12_cloud_debug_lab/) | Run **lab 11's page objects + spec, verbatim** locally **and** on BrowserStack — only `device.provider` changes |
 
 ✅ start here · 🚧 scaffold — README + config stub ready, the spec is yours to capture
 
 Each lab folder has its own `README.md` with the full walkthrough.
 
-`config-lab/` breaks §6 into six runnable mini-projects:
-[`1-tests-and-timing/`](config-lab/1-tests-and-timing/) ·
-[`2-execution-and-output/`](config-lab/2-execution-and-output/) ·
-[`3-use-app-and-session/`](config-lab/3-use-app-and-session/) ·
-[`4-artifacts/`](config-lab/4-artifacts/) ·
-[`5-device-providers/`](config-lab/5-device-providers/) ·
-[`6-appium-server/`](config-lab/6-appium-server/)
+### ⚠️ Three things that are *this machine's*, not yours
+
+The labs are committed with real values from the author's setup. Three of them won't resolve on
+your machine — swap them before running:
+
+| Where | What to change |
+|---|---|
+| [`tutorial_06_parallel_lab/taqwright.config.ts`](tutorial_06_parallel_lab/taqwright.config.ts) | The AVD names + serials (`Pixel_10_Pro_XL`, `emulator-5554`, …) in the `android-single` / `android-pool-2` projects. Get yours from `npx taqwright devices`, or just run the `android-auto-*` projects — they use `autoDiscover` and need no edits. |
+| [`tutorial_12_cloud_debug_lab/taqwright.config.ts`](tutorial_12_cloud_debug_lab/taqwright.config.ts) | The `bs://…` app ids — a BrowserStack app id is **private to the account that uploaded it**. Upload [`app/`](app/)'s binaries to your account and set `TAQ_APK` / `TAQ_IPA` in `.env`, or point them at the local files to upload per run. |
+| [`tutorial_02_codegen_lab/`](tutorial_02_codegen_lab/) | Nothing to change — but note there's **no spec to run**. Record the add-to-cart flow with `npx taqwright codegen` and save it into `tests/` first. |
+
+> **Labs 11 and 12 share code.** `pages/` and `tests/add-to-cart.spec.ts` are byte-identical copies
+> (labs are standalone npm projects, so nothing is imported across them) — the sole exception is
+> `pages/index.ts`, where lab 12's factories match `projectName.includes('ios')` to catch its
+> `browserstack-ios` project. Change a page object in one, mirror it in the other.
+
+`tutorial_03_config_lab/` breaks §6 into six runnable mini-projects:
+[`1_tests_and_timing/`](tutorial_03_config_lab/1_tests_and_timing/) ·
+[`2_execution_and_output/`](tutorial_03_config_lab/2_execution_and_output/) ·
+[`3_use_app_and_session/`](tutorial_03_config_lab/3_use_app_and_session/) ·
+[`4_artifacts/`](tutorial_03_config_lab/4_artifacts/) ·
+[`5_device_providers/`](tutorial_03_config_lab/5_device_providers/) ·
+[`6_appium_server/`](tutorial_03_config_lab/6_appium_server/)
 
 ## Two engines
 
@@ -81,7 +97,7 @@ Each lab folder has its own `README.md` with the full walkthrough.
 | Output | `*.spec.ts` (run with `npx taqwright test`) | `*.spec.ts` (same — run locally) |
 
 Both produce the **same artifact**: a spec that `import`s from `taqwright`. Every lab here is
-Engine A, except the debug half of `cloud-debug-lab/`; Engine B needs a **LIME Pro account +
+Engine A, except the debug half of `tutorial_12_cloud_debug_lab/`; Engine B needs a **LIME Pro account +
 `LIME_CI_TOKEN` + lime-agent**, so it's demo-only.
 
 ## Prerequisites
@@ -99,7 +115,8 @@ adb devices        # emulator shows "device"
 > ```
 > taqwright **auto-starts Appium** on `:4723`, so you don't have to run it in a separate terminal.
 
-For `cloud-debug-lab/` you'll also want a [BrowserStack](https://www.browserstack.com/) account.
+For `tutorial_12_cloud_debug_lab/` you'll also want a [BrowserStack](https://www.browserstack.com/) account —
+plus your **own** app upload (see the table above); the `bs://…` ids in that config are the author's.
 The `taqwright` skill is the authoritative reference for the `mobile` API, locator priority,
 config, and `lime-cli`.
 

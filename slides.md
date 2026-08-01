@@ -2,8 +2,8 @@
 marp: true
 theme: default
 paginate: true
-header: "AI-Assisted Mobile UI Test Automation · Session 4"
-footer: "Taqelah Bootcamp · June 2026"
+header: "taqwright — Playwright-style mobile testing on Appium 3"
+footer: "taqwright-tutorial · Taqelah"
 style: |
   section { font-size: 26px; }
   section.lead h1 { font-size: 54px; }
@@ -29,46 +29,46 @@ style: |
 
 <!-- _class: lead -->
 
-# 📱 Mobile UI Test Automation
-## Session 4 — taqwright
+# 📱 taqwright
+## A hands-on tutorial
 
 ![taqwright h:150](images/taqwright_logo.png)
 
-**AI-Assisted Mobile Test Automation using Claude**
-4 Sundays · 2–6 PM SGT
+**Playwright-style mobile test automation on Appium 3**
+Deck · 12 labs · demo app included
 
 <br>
 
-<span class="small">The finale: test the **Playwright way** on top of Appium 3 — and walk the **entire taqwright docs**, top to bottom.</span>
+<span class="small">Test the **Playwright way** on top of Appium 3 — walking the **entire taqwright docs**, top to bottom, with a runnable lab after each topic.</span>
 
 ---
 
 <!-- _class: lead -->
 
-# 👋 Welcome back — last one!
+# 👋 What's in this repo
 
 ---
 
-## The 4-session arc
+## The repo at a glance
 
-| Session | Theme | |
-|---|---|---|
-| **1** | Landscape & setup — first script, locators, a login flow | ✅ |
-| **2** | Real, maintainable tests — waits, gestures, data-driven, parallel | ✅ |
-| **3** | Scaling + **Claude** — Page Objects, reporting, CI, cloud, flaky | ✅ |
-| **4** | **taqwright** — Playwright-style mobile testing on Appium 3 | 🎯 **today** |
+| | |
+|---|---|
+| 📊 [`slides.md`](slides.md) | this deck — the docs, top to bottom (`slides.html` / `slides.pdf` built alongside) |
+| 🧪 **12 lab folders** | one runnable project per topic, each with its own `README.md` |
+| 📱 [`app/`](app/) | the demo-app binaries under test — **committed**, nothing to download |
+| 🖼️ [`images/`](images/) | diagrams used by the deck |
 
-<span class="small">You can already write and maintain real mobile tests by hand, and direct Claude to help. Today: a runner that makes all of it **shorter** — covered end to end.</span>
+<span class="small">Clone it and go. Every lab is a self-contained TS project: `tests/*.spec.ts` + `taqwright.config.ts`.</span>
 
 ---
 
-## Where we left off — Session 3
+## The app under test
 
-- 🧠 **AI foundations** — what LLMs are, prompting, verification
-- 🤖 **Claude-assisted authoring** — Appium MCP, author / refactor / debug
-- 🧱 **Scaling** — Page Objects, reporting, CI, cloud devices, flaky tests
+- 📦 [`taqelah/demo-app`](https://github.com/taqelah/demo-app/releases/tag/v1.0.0) **v1.0.0** — APK + `.app`, committed under [`app/`](app/)
+- 🔑 Credentials: `emma@demoapp.com` / `10203040`
+- 🤖 Appium **3.x** · UiAutomator2 (Android) · XCUITest (iOS, macOS only)
 
-<span class="small">All of it on **raw Appium** — WebdriverIO (Node) + Appium-Python-Client (pytest). Powerful, but **verbose**.</span>
+<span class="small">Every lab's `buildPath` already points at `app/` — no downloads, no per-lab setup. Install by hand if you like: `adb install -r app/DemoApp-v1.0.0.apk`</span>
 
 ---
 
@@ -93,7 +93,7 @@ Raw Appium/WDIO is powerful but **boilerplate-heavy**: explicit waits, session s
 - The **`mobile`** fixture: `getById`, `getByLabel`, `click`, `fill`, `expect(...).toBeVisible()`
 - **TypeScript only** — `tests/*.spec.ts` + `taqwright.config.ts`
 
-<span class="small">⚠️ **No `node/` + `python/` dual-stack this session.** One TS project per lab — that's the whole point.</span>
+<span class="small">⚠️ **No `node/` + `python/` dual-stack.** One TS project per lab — that's the whole point.</span>
 
 ---
 
@@ -119,9 +119,9 @@ Raw Appium/WDIO is powerful but **boilerplate-heavy**: explicit waits, session s
 
 ---
 
-## 🗺️ How today maps to the docs
+## 🗺️ How this deck maps to the docs
 
-We'll walk the **taqwright docs sidebar, top to bottom** — two groups:
+The deck walks the **taqwright docs sidebar, top to bottom** — two groups:
 
 <div class="cols">
 <div>
@@ -143,31 +143,31 @@ Actions · Assertions · Auto-waiting · Configuration · Annotations · Global 
 
 ---
 
-## 🧪 Labs today — hands-on after each topic (1 / 2)
+## 🧪 The labs — hands-on after each topic (1 / 2)
 
 | Lab | Exercises | After | Status |
 |---|---|---|---|
-| 🧰 [`setup-lab/`](setup-lab/) | install, provision & verify the toolchain | Installation | ✅ |
-| 🎥 [`codegen-lab/`](codegen-lab/) | record a flow into a spec | Codegen | 🚧 scaffold |
-| ⚙️ [`config-lab/`](config-lab/) | 6 mini-projects — one per config concept | Configuration | ✅ |
-| 🏷️ [`annotations-lab/`](annotations-lab/) | tags · metadata · skip/fixme/fail/slow | Annotations | ✅ |
-| 🌐 [`global-setup-lab/`](global-setup-lab/) | globalSetup/teardown module + setup project | Global setup | ✅ |
-| ⚡ [`parallel-lab/`](parallel-lab/) | workers · device pool · autoDiscover | Parallelism | ✅ |
+| 🧰 [`tutorial_01_setup_lab/`](tutorial_01_setup_lab/) | install, provision & verify the toolchain | Installation | ✅ |
+| 🎥 [`tutorial_02_codegen_lab/`](tutorial_02_codegen_lab/) | record a flow into a spec | Codegen | 🚧 scaffold |
+| ⚙️ [`tutorial_03_config_lab/`](tutorial_03_config_lab/) | 6 mini-projects — one per config concept | Configuration | ✅ |
+| 🏷️ [`tutorial_04_annotations_lab/`](tutorial_04_annotations_lab/) | tags · metadata · skip/fixme/fail/slow | Annotations | ✅ |
+| 🌐 [`tutorial_05_global_setup_lab/`](tutorial_05_global_setup_lab/) | globalSetup/teardown module + setup project | Global setup | ✅ |
+| ⚡ [`tutorial_06_parallel_lab/`](tutorial_06_parallel_lab/) | workers · device pool · autoDiscover | Parallelism | ✅ |
 
-<span class="small">Each lab appears right after the topic it exercises — not bunched at the end. **Start with `setup-lab`.**</span>
+<span class="small">Each lab appears right after the topic it exercises — not bunched at the end. **Start with `tutorial_01_setup_lab`.** Every folder has its own `README.md` with the full walkthrough.</span>
 
 ---
 
-## 🧪 Labs today (2 / 2)
+## 🧪 The labs (2 / 2)
 
 | Lab | Exercises | After | Status |
 |---|---|---|---|
-| 🔢 [`parameterize-lab/`](parameterize-lab/) | data-array loop · external JSON | Parameterize | ✅ |
-| 🧩 [`projects-lab/`](projects-lab/) | android + iOS targets via `projects[]` | Projects | ✅ android |
-| 🧩 [`page-object-lab/`](page-object-lab/) | one spec, both platforms (base + subclasses) | Page Objects | ✅ |
-| 🧬 [`merge-report-lab/`](merge-report-lab/) | blob reporter → `merge-reports` | Reporters | ✅ |
-| 🔁⏱️🔎 [`retry-timeout-trace-lab/`](retry-timeout-trace-lab/) | flaky+retry · timeouts · trace | §17–19 | ✅ |
-| ☁️ [`cloud-debug-lab/`](cloud-debug-lab/) | page-object spec on BrowserStack | last topic | ✅ android |
+| 🔢 [`tutorial_07_parameterize_lab/`](tutorial_07_parameterize_lab/) | data-array loop · external JSON | Parameterize | ✅ |
+| 🧩 [`tutorial_08_projects_lab/`](tutorial_08_projects_lab/) | android + iOS targets via `projects[]` | Projects | ✅ android |
+| 🧬 [`tutorial_09_merge_report_lab/`](tutorial_09_merge_report_lab/) | blob reporter → `merge-reports` | Reporters | ✅ |
+| 🔁⏱️🔎 [`tutorial_10_retry_timeout_trace_lab/`](tutorial_10_retry_timeout_trace_lab/) | flaky+retry · timeouts · trace | §17–19 | ✅ |
+| 🧩 [`tutorial_11_page_object_lab/`](tutorial_11_page_object_lab/) | one spec, both platforms (base + subclasses) | Page Objects | ✅ |
+| ☁️ [`tutorial_12_cloud_debug_lab/`](tutorial_12_cloud_debug_lab/) | page-object spec on BrowserStack | last topic | ✅ android |
 
 <span class="small">`✅` = runnable on a local emulator/sim; cloud + iOS need creds / macOS.</span>
 
@@ -319,7 +319,7 @@ taqwright doctor (v0.1.0-beta.1)
 Lists every target taqwright can attach to — Android AVDs, iOS simulators, connected devices.
 
 ```text
-Android (adb + emulator):
+Android (adb + emulator):        ← example output; YOUR AVD names differ
   Pixel 7 API 34       avd:Pixel_7_API_34   (shutdown)
   taqwright api34      avd:taqwright_api34  (shutdown)
 
@@ -328,7 +328,7 @@ iOS Simulators (xcrun simctl):
   iPhone Air           FF95…A16985F         (booted,   iOS 26.5)
 ```
 
-<span class="small">📋 Copy the **`avd:<id>`** into `device.name` (Android) or the **`<UDID>`** into `device.udid` (iOS) in `taqwright.config.ts`. State = shutdown / booted — taqwright can cold-boot for you via `appium.autoStartDevice` or `device.autoDiscover`.</span>
+<span class="small">📋 Copy the **`avd:<id>`** into `device.name` (Android) or the **`<UDID>`** into `device.udid` (iOS) in `taqwright.config.ts`. **Never copy an AVD name off a slide or someone else's config — always take it from *your* `devices` output.** State = shutdown / booted — taqwright can cold-boot for you via `appium.autoStartDevice` or `device.autoDiscover`.</span>
 
 ---
 
@@ -349,12 +349,12 @@ npx taqwright install --print-env  # print export lines to use the toolchain fro
 
 ---
 
-## 🧪 Lab · `setup-lab` ✅ get your machine ready
+## 🧪 Lab · `tutorial_01_setup_lab` ✅ get your machine ready
 
 One-time **environment setup** before any taqwright test — end on a green smoke run.
 
 ```bash
-cd setup-lab     # the install & setup lab
+cd tutorial_01_setup_lab     # the install & setup lab
 nvm use 24                 # taqwright needs Node 24+ (the one hard requirement)
 npm install                # installs taqwright
 
@@ -363,7 +363,7 @@ npx taqwright test tests/smoke.spec.ts  # run the smoke spec — boots a device,
 npx taqwright show-report               # open the HTML report
 ```
 
-<span class="small">No setup beyond this: the config `autoDiscover`s + boots a device, auto-starts Appium, and reinstalls the shared `app/` APK each test. Green here = your machine's ready for every lab today. → [`setup-lab/`](setup-lab/)</span>
+<span class="small">No setup beyond this: the config `autoDiscover`s + boots a device, auto-starts Appium, and reinstalls the shared `app/` APK each test. Green here = your machine's ready for every lab in this repo. → [`tutorial_01_setup_lab/`](tutorial_01_setup_lab/)</span>
 
 ---
 
@@ -402,16 +402,13 @@ npx taqwright show-report               # open the HTML report
 ## 2 · Codegen — launch & connect
 
 ```bash
-npx taqwright codegen --project android   # = inspect --record  (auto-records)
-npx taqwright inspect --project android   # explore only, no recording
+npx taqwright codegen
 ```
 
 - Opens a **web inspector at `localhost:4280`** (auto-picks a free port) in your browser
 - Reads `taqwright.config.ts` — project, caps (UiAutomator2, `noReset`), Appium host/port
 - Connect to a **local** emulator/device *(Appium auto-starts)* **or a cloud** device (BrowserStack / LambdaTest)
 - **Boot / stop** emulators & simulators right from the UI · Ctrl+C cleans the session up
-
-<span class="small">`codegen` is literally `inspect` with recording switched on.</span>
 
 ---
 
@@ -429,7 +426,7 @@ npx taqwright codegen
 - Same **live screen mirror**, same **ranked + uniqueness-checked** locators, same **recording → spec**
 - Real **permission dialogs** show up (auto-grant is off during codegen) — so you can record them
 
-<span class="small">Generate on a cloud device, then run the spec on the same grid → [`cloud-debug-lab/`](cloud-debug-lab/).</span>
+<span class="small">Generate on a cloud device, then run the spec on the same grid → [`tutorial_12_cloud_debug_lab/`](tutorial_12_cloud_debug_lab/).</span>
 
 ---
 
@@ -563,18 +560,19 @@ test('flow', async ({ mobile }) => {
 
 ---
 
-## 🧪 Lab · `codegen-lab` 🎥 record a flow 🚧
+## 🧪 Lab · `tutorial_02_codegen_lab` 🎥 record a flow 🚧
 
 Stop hand-writing locators — **record** them: the inspector ranks candidates by **stability + uniqueness** and emits paste-ready taqwright code.
 
+**This lab ships with no spec — `tests/` is empty. Record the *add to cart* flow on the demo app, save it into `tests/`, then run it.**
+
 ```bash
-cd codegen-lab    # the codegen / record lab
+cd tutorial_02_codegen_lab    # the codegen / record lab — no spec ships with it
 npm install                 # installs taqwright
 
-npx taqwright inspect       # select an element → read the ranked Locators tab
-npx taqwright codegen       # auto-record: log in → Shop All → search "black dress" → add to cart
-# paste the Recorded script into tests/search-add-to-cart.spec.ts, then:
-npx taqwright test tests/search-add-to-cart.spec.ts   # run your recorded spec
+npx taqwright codegen       # record on the demo app: log in → Shop All → search "black dress" → add to cart
+mkdir -p tests              # paste the Recorded script into tests/search-add-to-cart.spec.ts
+npx taqwright test tests/search-add-to-cart.spec.ts   # run the spec you just recorded
 npx taqwright show-report   # open the HTML report
 ```
 
@@ -733,7 +731,7 @@ await expect(async () => { /* … */ }).toPass();      // retry a block
 <div class="cols">
 <div>
 
-**WebdriverIO (Session 1–3)**
+**Raw Appium — WebdriverIO**
 ```js
 const u = await $('android=new ' +
   'UiSelector().className(' +
@@ -749,7 +747,7 @@ expect(await $('~View All')
 </div>
 <div>
 
-**taqwright (today)**
+**taqwright**
 ```ts
 await mobile.getByType(
   'android.widget.EditText')
@@ -838,7 +836,7 @@ export default defineConfig({
 
 <span class="small">One file (`taqwright.config.ts`), generated by `init`. **Top-level keys = the whole run**; **`projects[]` = where/how each device target runs** — and a project key **overrides** the top-level one.</span>
 
-<span class="small">🧪 Each concept below has a hands-on **mini-project** in [`config-lab/`](config-lab/) — try it right after the slide.</span>
+<span class="small">🧪 Each concept below has a hands-on **mini-project** in [`tutorial_03_config_lab/`](tutorial_03_config_lab/) — try it right after the slide.</span>
 
 ---
 
@@ -857,14 +855,14 @@ export default defineConfig({
 
 ---
 
-## 🧪 Lab · `config-lab/1-tests-and-timing/` ⏱️
+## 🧪 Lab · `tutorial_03_config_lab/1_tests_and_timing/` ⏱️
 
 ```bash
-cd config-lab/1-tests-and-timing
+cd tutorial_03_config_lab/1_tests_and_timing
 npm install && npm test
 ```
 
-<span class="small">Spotlights `testDir` · `timeout` · `expectTimeout` · `retries`. Try: drop `timeout` to `5_000`; break a locator with `retries: 1` → watch the rerun + **flaky** flag. → [`1-tests-and-timing/`](config-lab/1-tests-and-timing/)</span>
+<span class="small">Spotlights `testDir` · `timeout` · `expectTimeout` · `retries`. Try: drop `timeout` to `5_000`; break a locator with `retries: 1` → watch the rerun + **flaky** flag. → [`1_tests_and_timing/`](tutorial_03_config_lab/1_tests_and_timing/)</span>
 
 ---
 
@@ -882,14 +880,14 @@ npm install && npm test
 
 ---
 
-## 🧪 Lab · `config-lab/2-execution-and-output/` ⚡
+## 🧪 Lab · `tutorial_03_config_lab/2_execution_and_output/` ⚡
 
 ```bash
-cd config-lab/2-execution-and-output
+cd tutorial_03_config_lab/2_execution_and_output
 npm install && npm test
 ```
 
-<span class="small">Spotlights `workers` · `reporter` · `globalSetup` · `forbidOnly`. Watch the `[global-setup]` log, `report.json`, and `./artifacts`. Try: `workers: 2`; add `test.only` → `forbidOnly` fails the run. → [`2-execution-and-output/`](config-lab/2-execution-and-output/)</span>
+<span class="small">Spotlights `workers` · `reporter` · `globalSetup` · `forbidOnly`. Watch the `[global-setup]` log, `report.json`, and `./artifacts`. Try: `workers: 2`; add `test.only` → `forbidOnly` fails the run. → [`2_execution_and_output/`](tutorial_03_config_lab/2_execution_and_output/)</span>
 
 ---
 
@@ -911,14 +909,14 @@ Each project's `use` describes **one device target + how the app is handled**:
 
 ---
 
-## 🧪 Lab · `config-lab/3-use-app-and-session/` 📦
+## 🧪 Lab · `tutorial_03_config_lab/3_use_app_and_session/` 📦
 
 ```bash
-cd config-lab/3-use-app-and-session
+cd tutorial_03_config_lab/3_use_app_and_session
 npm install && npm test
 ```
 
-<span class="small">Spotlights `platform` · `buildPath` · `resetBetweenTests` · `capabilities`. Try: the **reset trio** — `resetBetweenTests: true` + `buildPath` + `appBundleId` — is type-required *together*; comment out any one and **TypeScript errors** (put it back, error clears). → [`3-use-app-and-session/`](config-lab/3-use-app-and-session/)</span>
+<span class="small">Spotlights `platform` · `buildPath` · `resetBetweenTests` · `capabilities`. Try: the **reset trio** — `resetBetweenTests: true` + `buildPath` + `appBundleId` — is type-required *together*; comment out any one and **TypeScript errors** (put it back, error clears). → [`3_use_app_and_session/`](tutorial_03_config_lab/3_use_app_and_session/)</span>
 
 ---
 
@@ -938,14 +936,14 @@ use: { trace: 'on-failure', video: 'on-failure', network: 'off' }
 
 ---
 
-## 🧪 Lab · `config-lab/4-artifacts/` 🔎
+## 🧪 Lab · `tutorial_03_config_lab/4_artifacts/` 🔎
 
 ```bash
-cd config-lab/4-artifacts
+cd tutorial_03_config_lab/4_artifacts
 npm install && npm test && npx taqwright show-report
 ```
 
-<span class="small">Spotlights `trace` · `video` · `network` (modes `off` · `on` · `on-failure` · `retain-on-failure`). `trace:'on'` here → step through **every** action in the report. → [`4-artifacts/`](config-lab/4-artifacts/)</span>
+<span class="small">Spotlights `trace` · `video` · `network` (modes `off` · `on` · `on-failure` · `retain-on-failure`). `trace:'on'` here → step through **every** action in the report. → [`4_artifacts/`](tutorial_03_config_lab/4_artifacts/)</span>
 
 ---
 
@@ -958,7 +956,7 @@ npm install && npm test && npx taqwright show-report
 ```ts
 device: {
   provider: 'emulator',
-  name: 'Pixel_7_API_34', // string | RegExp
+  name: 'Pixel_7_API_34', // ← EXAMPLE — use yours
   udid: 'emulator-5554',  // wins over name
   osVersion: '14',
   orientation: 'portrait',// | 'landscape'
@@ -1004,7 +1002,7 @@ device: { provider: 'emulator',
 ```ts
 device: { provider: 'emulator', autoDiscover: true }
 ```
-<span class="small">No name/udid needed — enumerates + boots what's available; finds several when `workers > 1`. What `setup-lab` uses.</span>
+<span class="small">No name/udid needed — enumerates + boots what's available; finds several when `workers > 1`. What `tutorial_01_setup_lab` uses.</span>
 
 </div>
 <div>
@@ -1013,11 +1011,11 @@ device: { provider: 'emulator', autoDiscover: true }
 ```ts
 workers: 2,
 device: { provider: 'emulator', pool: [
-  { udid: 'emulator-5554' },
-  { udid: 'emulator-5556' },
+  { udid: 'emulator-5554' },  // ← YOUR serials
+  { udid: 'emulator-5556' },  //   (npx taqwright devices)
 ] }
 ```
-<span class="small">Each worker grabs one entry `{ udid, name?, osVersion? }`. Overrides auto-discovery.</span>
+<span class="small">Each worker grabs one entry `{ udid, name?, osVersion? }`. Overrides auto-discovery. ⚠️ Pool entries are **machine-specific** — AVD ids/serials differ on every laptop; always paste your own.</span>
 
 **4 · Cloud — BrowserStack / LambdaTest**
 ```ts
@@ -1033,14 +1031,14 @@ device: { provider: 'browserstack',
 
 ---
 
-## 🧪 Lab · `config-lab/5-device-providers/` 📱
+## 🧪 Lab · `tutorial_03_config_lab/5_device_providers/` 📱
 
 ```bash
-cd config-lab/5-device-providers
+cd tutorial_03_config_lab/5_device_providers
 npm install && npm test
 ```
 
-<span class="small">Spotlights `emulator` · `udid` · `pool` · cloud. Try: swap `autoDiscover` for `udid: 'emulator-5554'`; uncomment the `browserstack` project + creds. Precedence: `udid › pool › name › autoDiscover`. → [`5-device-providers/`](config-lab/5-device-providers/)</span>
+<span class="small">Spotlights `emulator` · `udid` · `pool` · cloud. Try: swap `autoDiscover` for `udid: 'emulator-5554'`; uncomment the `browserstack` project + creds. Precedence: `udid › pool › name › autoDiscover`. → [`5_device_providers/`](tutorial_03_config_lab/5_device_providers/)</span>
 
 ---
 
@@ -1059,18 +1057,18 @@ use: { appium: { autoStart: true, host: 'localhost', port: 4723, path: '/' } }
 | `connectionTimeout` | `5000` (ms) | Wait for the server to respond |
 | `logLevel` | — | `trace·debug·info·warn·error·silent` |
 
-<span class="small">📂 Live, runnable examples of **all** of the above: [`setup-lab/`](setup-lab/) & the [`config-lab/`](config-lab/) projects' `taqwright.config.ts`.</span>
+<span class="small">📂 Live, runnable examples of **all** of the above: [`tutorial_01_setup_lab/`](tutorial_01_setup_lab/) & the [`tutorial_03_config_lab/`](tutorial_03_config_lab/) projects' `taqwright.config.ts`.</span>
 
 ---
 
-## 🧪 Lab · `config-lab/6-appium-server/` 🔌
+## 🧪 Lab · `tutorial_03_config_lab/6_appium_server/` 🔌
 
 ```bash
-cd config-lab/6-appium-server
+cd tutorial_03_config_lab/6_appium_server
 npm install && npm test
 ```
 
-<span class="small">Spotlights `autoStart` · `autoStartDevice` · `host`/`port`/`path` · timeouts · `logLevel`. Try: `logLevel: 'debug'` to see the Appium handshake; start `appium` yourself → it attaches instead. → [`6-appium-server/`](config-lab/6-appium-server/)</span>
+<span class="small">Spotlights `autoStart` · `autoStartDevice` · `host`/`port`/`path` · timeouts · `logLevel`. Try: `logLevel: 'debug'` to see the Appium handshake; start `appium` yourself → it attaches instead. → [`6_appium_server/`](tutorial_03_config_lab/6_appium_server/)</span>
 
 ---
 
@@ -1109,17 +1107,17 @@ test('issue repro', { annotation: { type: 'issue', description: 'TAQ-482' } }, �
 
 ---
 
-## 🧪 Lab · `annotations-lab/` 🏷️
+## 🧪 Lab · `tutorial_04_annotations_lab/` 🏷️
 
 ```bash
-cd annotations-lab
+cd tutorial_04_annotations_lab
 npm install
 npx taqwright test --list          # see how each test is reported
 npx taqwright test --grep @smoke   # run only @smoke-tagged tests
 npm test                           # all: skip/fixme excluded · fail expected · slow tripled
 ```
 
-<span class="small">Demos `tag` · `annotation` metadata · `test.skip`/`fixme`/`fail`/`slow`. Try: `--grep-invert @checkout`; `CI=1 npx taqwright test` flips the conditional `test.skip(isCI, …)`. → [`annotations-lab/`](annotations-lab/)</span>
+<span class="small">Demos `tag` · `annotation` metadata · `test.skip`/`fixme`/`fail`/`slow`. Try: `--grep-invert @checkout`; `CI=1 npx taqwright test` flips the conditional `test.skip(isCI, …)`. → [`tutorial_04_annotations_lab/`](tutorial_04_annotations_lab/)</span>
 
 ---
 
@@ -1185,15 +1183,15 @@ globalSetup → setup project → ┃ beforeAll → (beforeEach → TEST → aft
 
 ---
 
-## 🧪 Lab · `global-setup-lab/` 🌐
+## 🧪 Lab · `tutorial_05_global_setup_lab/` 🌐
 
 ```bash
-cd global-setup-lab
+cd tutorial_05_global_setup_lab
 npm install
 npm test     # watch the order: [globalSetup] → setup project → android tests → [globalTeardown]
 ```
 
-<span class="small">Demos **every scope**: `globalSetup`/`globalTeardown` module · **setup project** (`dependencies`) · `beforeAll`/`afterAll` · `beforeEach`/`afterEach` (in `hooks.spec.ts`). Run `npm test` and read the order in the console. → [`global-setup-lab/`](global-setup-lab/)</span>
+<span class="small">Demos **every scope**: `globalSetup`/`globalTeardown` module · **setup project** (`dependencies`) · `beforeAll`/`afterAll` · `beforeEach`/`afterEach` (in `hooks.spec.ts`). Run `npm test` and read the order in the console. → [`tutorial_05_global_setup_lab/`](tutorial_05_global_setup_lab/)</span>
 
 ---
 
@@ -1211,23 +1209,26 @@ use: {
 - Each worker grabs a device and spawns its **own Appium** on a staggered port
 - `workers > 1` needs an adequate `pool` **or** `autoDiscover: true` (else it fails at load)
 - `fullyParallel` changes scheduling granularity (tests-in-a-file vs whole files) — it **never** raises the device count
+- ⚠️ A `pool` hardcodes **AVD ids + serials that only exist on the machine that wrote it** — swap in your own from `npx taqwright devices`, or use `autoDiscover` and stay portable
 
-<span class="small">🔁 Remember **Session 2's parallel-lab** (two emulators)? Same idea — declarative here.</span>
+<span class="small">🔁 Two emulators, one command — the device fan-out is **declarative**, not wiring you hand-roll.</span>
 
 ---
 
-## 🧪 Lab · `parallel-lab/` ⚡
+## 🧪 Lab · `tutorial_06_parallel_lab/` ⚡
 
 ```bash
-cd parallel-lab
+cd tutorial_06_parallel_lab
 npm install
 npx taqwright test --project android-auto-1    # autoDiscover · serial (1 device)
 npx taqwright test --project android-auto-2    # autoDiscover · 2-wide (needs 2 AVDs)
-npx taqwright test --project android-single     # pinned udid (1 emulator)
-npx taqwright test --project android-pool-2     # fixed pool of 2 · workers 2
+npx taqwright test --project android-single     # ⚠️ edit the AVD name/udid first
+npx taqwright test --project android-pool-2     # ⚠️ edit the 2 pool entries first
 ```
 
-<span class="small">4 projects, one per strategy: pinned `udid` · `pool` of 2 · `autoDiscover` (1- & 2-wide). Worker *i* gets its own device + Appium on `4723+i`. Adapted from the [taqwright-demo](https://github.com/Taqwright/taqwright-demo) config. → [`parallel-lab/`](parallel-lab/)</span>
+**⚠️ `android-single` + `android-pool-2` are pinned to *my* emulators** (`Pixel_10_Pro_XL`, `emulator-5554`, …) — **yours are named differently.** Run `npx taqwright devices` and paste your own `avd:<id>` + serial into `taqwright.config.ts`. The two **`auto`** projects need no edits and run anywhere.
+
+<span class="small">4 projects, one per strategy: pinned `udid` · `pool` of 2 · `autoDiscover` (1- & 2-wide). Worker *i* gets its own device + Appium on `4723+i`. Adapted from the [taqwright-demo](https://github.com/Taqwright/taqwright-demo) config. → [`tutorial_06_parallel_lab/`](tutorial_06_parallel_lab/)</span>
 
 ---
 
@@ -1247,20 +1248,20 @@ for (const a of accounts) {
 }
 ```
 
-<span class="small">Also: **option fixtures** (`test.extend` + `test.use`), **project-based** (same specs × devices), and **external CSV/JSON** loaded at collection time. 🔁 Session 2's **data-driven** lab, the taqwright way.</span>
+<span class="small">Also: **option fixtures** (`test.extend` + `test.use`), **project-based** (same specs × devices), and **external CSV/JSON** loaded at collection time. 🔁 Classic **data-driven** testing, the taqwright way.</span>
 
 ---
 
-## 🧪 Lab · `parameterize-lab/` 🔢
+## 🧪 Lab · `tutorial_07_parameterize_lab/` 🔢
 
 ```bash
-cd parameterize-lab
+cd tutorial_07_parameterize_lab
 npm install
 npx taqwright test --list      # one test per data row
 npx taqwright test tests/parameterize.spec.ts
 ```
 
-<span class="small">Loop a data array → one `test()` per row (valid · wrong password · unknown user). Same flow driven from an external **JSON** file in `from-json.spec.ts`. Slide also mentions option fixtures (`test.extend`) + project-based. → [`parameterize-lab/`](parameterize-lab/)</span>
+<span class="small">Loop a data array → one `test()` per row (valid · wrong password · unknown user). Same flow driven from an external **JSON** file in `from-json.spec.ts`. Slide also mentions option fixtures (`test.extend`) + project-based. → [`tutorial_07_parameterize_lab/`](tutorial_07_parameterize_lab/)</span>
 
 ---
 
@@ -1283,52 +1284,17 @@ npx taqwright test --project android --project ios   # repeatable
 
 ---
 
-## 🧪 Lab · `projects-lab/` 🧩
+## 🧪 Lab · `tutorial_08_projects_lab/` 🧩
 
 ```bash
-cd projects-lab
+cd tutorial_08_projects_lab
 npm install
 npx taqwright test --project android   # Android login
 npx taqwright test --project ios       # iOS login (macOS + simulator)
 npx taqwright test                     # both targets
 ```
 
-<span class="small">Two `projects[]` — an **`android`** and an **`ios`** target, each with its own `use` (platform · device · build · bundle id) running its own `login.spec.ts`. Same idea scales to BrowserStack. → [`projects-lab/`](projects-lab/)</span>
-
----
-
-## Page Objects — one spec, both platforms 🧩
-
-The **flow** is the same on Android & iOS; only the **locators** differ → flow in an **abstract base**, locators in **subclasses**.
-
-```ts
-abstract class AddToCartPage {                  // the flow, written once
-  protected abstract loginButton(): Locator;    // ← subclasses fill these in
-  async login(u, p) { /* … */ await this.loginButton().click(); }
-}
-class AndroidAddToCartPage extends AddToCartPage {
-  loginButton() { return this.mobile.getByUiSelector('…description("Login")'); } // no id → UiSelector
-}
-class IosAddToCartPage extends AddToCartPage {
-  loginButton() { return this.mobile.getById('Login'); }                         // iOS accessibility id
-}
-```
-
-<span class="small">A factory picks the subclass by `testInfo.project.name`. The spec is user-flow only — `page.login()` · `page.searchAndAddToCart('black')` — **no raw locators, no `if (platform)`**. One spec → runs on the `android` **and** `ios` projects.</span>
-
----
-
-## 🧪 Lab · `page-object-lab/` 🧩
-
-```bash
-cd page-object-lab
-npm install
-npm run test:android       # the SAME spec, Android page object
-npm run test:ios           # the SAME spec, iOS page object (macOS)
-npx taqwright test --list  # one spec under [android] AND [ios]
-```
-
-<span class="small">`pages/AddToCartPage.ts` (base flow) + `AndroidAddToCartPage` / `IosAddToCartPage` (locators only). The add-to-cart flow, recorded on both platforms. → [`page-object-lab/`](page-object-lab/)</span>
+<span class="small">Two `projects[]` — an **`android`** and an **`ios`** target, each with its own `use` (platform · device · build · bundle id) running its own `login.spec.ts`. Same idea scales to BrowserStack. → [`tutorial_08_projects_lab/`](tutorial_08_projects_lab/)</span>
 
 ---
 
@@ -1370,7 +1336,7 @@ npx taqwright merge-reports ./all-blobs --reporter html
 
 ---
 
-## `merge-report-lab` — how shard + merge fit 🧬
+## `tutorial_09_merge_report_lab` — how shard + merge fit 🧬
 
 The lab runs **both shards on ONE machine, back-to-back** — a local stand-in for CI's many machines.
 
@@ -1386,10 +1352,10 @@ ONE machine · two slices run sequentially:
 
 ---
 
-## 🧪 Lab · `merge-report-lab/` 🧬
+## 🧪 Lab · `tutorial_09_merge_report_lab/` 🧬
 
 ```bash
-cd merge-report-lab
+cd tutorial_09_merge_report_lab
 npm install
 npm run shard1     # --shard 1/2 --reporter blob → all-blobs/
 npm run shard2     # --shard 2/2 --reporter blob → all-blobs/
@@ -1397,7 +1363,7 @@ npm run merge      # merge-reports all-blobs --reporter html
 npm run report     # one combined HTML report
 ```
 
-<span class="small">Each shard emits a **`blob`** archive; **`merge-reports`** stitches them into one HTML report — the CI sharding pattern (matrix of N jobs → upload blobs → merge job). → [`merge-report-lab/`](merge-report-lab/)</span>
+<span class="small">Each shard emits a **`blob`** archive; **`merge-reports`** stitches them into one HTML report — the CI sharding pattern (matrix of N jobs → upload blobs → merge job). → [`tutorial_09_merge_report_lab/`](tutorial_09_merge_report_lab/)</span>
 
 ---
 
@@ -1457,16 +1423,54 @@ npx taqwright show-report           # → open the test → "taqwright-trace" at
 
 ---
 
-## 🧪 Lab · `retry-timeout-trace-lab/` 🔁⏱️🔎
+## 🧪 Lab · `tutorial_10_retry_timeout_trace_lab/` 🔁⏱️🔎
 
 ```bash
-cd retry-timeout-trace-lab
+cd tutorial_10_retry_timeout_trace_lab
 npm install
 npx taqwright test           # retries: 2 + trace: 'on' (every test traced)
 npx taqwright show-report    # open a test → "taqwright-trace" → step the timeline
 ```
 
-<span class="small">One lab for §17–19: a **flaky** test that clears on retry (flagged *flaky*, not failed) · **timeout** knobs (`test.setTimeout` / per-assertion `{ timeout }`) · a **trace** on every test → scrub it in the report. → [`retry-timeout-trace-lab/`](retry-timeout-trace-lab/)</span>
+<span class="small">One lab for §17–19: a **flaky** test that clears on retry (flagged *flaky*, not failed) · **timeout** knobs (`test.setTimeout` / per-assertion `{ timeout }`) · a **trace** on every test → scrub it in the report. → [`tutorial_10_retry_timeout_trace_lab/`](tutorial_10_retry_timeout_trace_lab/)</span>
+
+---
+
+## Page Objects — one spec, both platforms 🧩
+
+The **flow** is the same on Android & iOS; only the **locators** differ → flow in an **abstract base**, locators in **subclasses**.
+
+```ts
+abstract class LoginPage {                      // one page object per SCREEN
+  protected abstract loginButton(): Locator;    // ← subclasses fill these in
+  async login(u, p): Promise<HomePage> {        // …and the flow returns the NEXT screen
+    /* … */ await this.loginButton().click();
+    return homePage(this.mobile, this.projectName);
+  }
+}
+class AndroidLoginPage extends LoginPage {
+  loginButton() { return this.mobile.getByUiSelector('…description("Login")'); } // no id → UiSelector
+}
+class IosLoginPage extends LoginPage {
+  loginButton() { return this.mobile.getById('Login'); }                         // iOS accessibility id
+}
+```
+
+<span class="small">A factory **per screen** picks the subclass by `testInfo.project.name`. Flow methods return the next page, so the spec is a fluent chain — `login()` → `openCatalog()` → `searchAndAddToCart('black')` — **no raw locators, no `if (platform)`**. One spec → runs on the `android` **and** `ios` projects.</span>
+
+---
+
+## 🧪 Lab · `tutorial_11_page_object_lab/` 🧩
+
+```bash
+cd tutorial_11_page_object_lab
+npm install
+npm run test:android       # the SAME spec, Android page object
+npm run test:ios           # the SAME spec, iOS page object (macOS)
+npx taqwright test --list  # one spec under [android] AND [ios]
+```
+
+<span class="small">**One folder per screen** under `pages/` — `login/` · `home/` · `search-catalogue/` · `cart/` — each holding its base (flow) + `Android*` / `Ios*` subclasses (locators only), with a factory per screen in `pages/index.ts`. Locators came from real codegen recordings on both platforms. → [`tutorial_11_page_object_lab/`](tutorial_11_page_object_lab/)</span>
 
 ---
 
@@ -1480,7 +1484,7 @@ Same spec, same `mobile` API — only the project's **`use`** changes. Add a clo
   use: {
     platform: Platform.ANDROID,
     device: { provider: 'browserstack', name: 'Google Pixel 8', osVersion: '14.0' },
-    buildPath: 'bs://<app-id>',          // pre-uploaded, or a local .apk to upload
+    buildPath: 'bs://<app-id>',          // YOUR upload — ids are per-account
     appBundleId: 'com.taqelah.demo_app',
     resetBetweenTests: true,
   },                                     // no local `appium` block — BS runs the server
@@ -1488,33 +1492,52 @@ Same spec, same `mobile` API — only the project's **`use`** changes. Add a clo
 ```
 
 - 🔑 Creds via **env** (not config): `BROWSERSTACK_USERNAME` / `BROWSERSTACK_ACCESS_KEY`
+- 📦 A **`bs://` id is private to the account that uploaded it** — upload your own app (`curl -u user:key -X POST …/app-automate/upload -F file=@app.apk`) or point `buildPath` at a local binary
 - ☁️ `provider:'browserstack'` + **`name`/`osVersion` required** · `workers: N` for parallel (no `device.pool`) · vendor knobs via `capabilities → 'bstack:options'`
 - ▶️ `npx taqwright test --project browserstack`
 
 ---
 
-## 🧪 Lab · `cloud-debug-lab` ☁️ — page objects on BrowserStack
+## 🧪 Lab · `tutorial_12_cloud_debug_lab` ☁️ — page objects on BrowserStack
 
-**Reuses `page-object-lab`'s add-to-cart spec + page objects** — only `device.provider` changes.
+**`tutorial_11_page_object_lab`'s page objects + spec, verbatim** — going cloud changes only `device.provider`.
+
+<span class="small">⚠️ The `bs://…` ids in the config are **mine** — a BrowserStack app id only works for the account that uploaded it. Upload `../app/`'s binaries to **your** account and set `TAQ_APK` / `TAQ_IPA`, or pass a local file path to upload per run.</span>
 
 ```bash
-cd cloud-debug-lab
+cd tutorial_12_cloud_debug_lab
 npm install
 cp .env.example .env         # add your BROWSERSTACK_USERNAME / _ACCESS_KEY
+                             # ⚠️ + your own TAQ_APK / TAQ_IPA app ids
 npm run test:local           # local emulator
 npm run test:cloud-android   # BrowserStack — real Android device
 npm run test:cloud-ios       # BrowserStack — real iOS device
 ```
 
-<span class="small">Same spec, same `pages/` (base + Android/iOS subclasses) — the `browserstack-android` / `browserstack-ios` projects just set `provider:'browserstack'` + `name`/`osVersion`; creds come from `.env`. Runs on real hardware, no local Appium. → [`cloud-debug-lab/`](cloud-debug-lab/)</span>
+<span class="small">Same spec, same per-screen `pages/` copied from lab 11 — the `browserstack-android` / `browserstack-ios` projects just set `provider:'browserstack'` + `name`/`osVersion`; creds come from `.env`. Runs on real hardware, no local Appium. **Only diff vs lab 11:** the factories match `projectName.includes('ios')`, since the cloud project is `browserstack-ios`. → [`tutorial_12_cloud_debug_lab/`](tutorial_12_cloud_debug_lab/)</span>
 
 ---
 
 <!-- _class: lead -->
 
-# 🎓 That's the bootcamp!
+# 🎓 That's the whole docs tour
 
-<span class="small">Setup → first script → maintainable tests → scaling with Claude → **taqwright, end to end**.</span>
+<span class="small">Install → codegen → writing tests → running & debugging → **the entire Taqwright Test section**, each with a lab beside it.</span>
+
+---
+
+## 🧭 Where to go next
+
+```bash
+cd tutorial_01_setup_lab && npm install
+npx taqwright doctor        # verify the toolchain
+npx taqwright devices       # copy your AVD id into taqwright.config.ts
+npx taqwright test          # green? work through the labs in order
+```
+
+- 📖 **Every lab folder** has a `README.md` with the full walkthrough
+- 🧩 Stuck on the `mobile` API, locator priority, config or `lime-cli`? → the **`taqwright` skill** is the authoritative reference
+- ☁️ [`tutorial_12_cloud_debug_lab/`](tutorial_12_cloud_debug_lab/) needs a [BrowserStack](https://www.browserstack.com/) account
 
 ---
 
@@ -1522,15 +1545,11 @@ npm run test:cloud-ios       # BrowserStack — real iOS device
 
 # 🙌 Thank you!
 
-So glad you all enjoyed the bootcamp — these skills will pay off across your **career**. 🚀
-
-**We'd love your feedback** on the *AI-Assisted Mobile UI Test Automation Using Claude* workshop:
-
-### 👉 https://forms.gle/RnhXLXckr3R66wGw5
+**Clone it, run it, break it** — the labs are yours to extend. 🚀
 
 ⭐ **Star taqwright on GitHub:** https://github.com/taqelah/taqwright
 
-🎓 **Proudly share your certificate on LinkedIn** — and tell everyone what you thought of the bootcamp!
+🐛 **Issues & ideas** are welcome — on `taqwright` or on this tutorial repo.
 
 **Keep testing.**
 🔗 [linkedin.com/in/syam-sasi](https://www.linkedin.com/in/syam-sasi/) · 🌐 [taqelah.sg](https://taqelah.sg/)
