@@ -1,0 +1,136 @@
+name: Quality gate
+
+# Quality gate for the tutorial: typecheck the page-object lab, then run its
+# add-to-cart spec end-to-end on a real Android emulator on the runner.
+# The lab is the strictest one we have (two projects, page objects, a full
+# login → catalogue → cart flow), so a green run here means taqwright, the
+# committed demo APK and the lab wiring all still agree.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One run per ref — a new push cancels the in-flight emulator run.
+concurrency:
+  group: quality-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LAB: tutorial_11_page_object_lab
+  NODE_VERSION: '24'
+  API_LEVEL: '34'
+
+jobs:
+  typecheck:
+    name: Typecheck (page object lab)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: ${{ env.LAB }}/package-lock.json
+
+      - run: npm ci
+        working-directory: ${{ env.LAB }}
+
+      - run: npm run typecheck
+        working-directory: ${{ env.LAB }}
+
+  android-e2e:
+    name: Android e2e (page object lab)
+    # Fail fast on types before paying ~15 min of emulator time.
+    needs: typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      # Hardware acceleration for the emulator. Without this the AVD falls back
+      # to software emulation and the run times out.
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      # The uiautomator2 driver shells out to the Android SDK tools, which need a JDK.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: ${{ env.LAB }}/package-lock.json
+
+      - run: npm ci
+        working-directory: ${{ env.LAB }}
+
+      # taqwright starts Appium itself (`appium.autoStart` in taqwright.config.ts)
+      # but does not ship it — it resolves `appium` from PATH. We deliberately do
+      # NOT run `taqwright install` here: that vendors its own JDK + Android SDK
+      # (~700 MB) and would then shadow the runner's SDK, which is the one the
+      # emulator below is booted from.
+      - name: Install Appium + uiautomator2 driver
+        run: |
+          npm install -g appium@^3
+          appium driver install uiautomator2
+
+      - name: Cache AVD snapshot
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ env.API_LEVEL }}
+
+      # First run on a cold cache: create the AVD and snapshot it so later runs boot fast.
+      - name: Create AVD snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ env.API_LEVEL }}
+          target: google_apis
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "AVD snapshot generated."
+
+      # The demo APK (../app/DemoApp-v1.0.0.apk) is committed, so there is nothing to
+      # download — the lab's `buildPath` + `resetBetweenTests` install it per test.
+      # `autoDiscover: true` picks up whichever emulator this action booted.
+      - name: Run add-to-cart spec on Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ env.API_LEVEL }}
+          target: google_apis
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          working-directory: ${{ env.LAB }}
+          script: npm run test:android
+
+      # `trace: 'on-failure'` means a failed run leaves a trace to open with
+      # `npx taqwright show-report`.
+      - name: Upload report and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-e2e-report
+          path: |
+            ${{ env.LAB }}/playwright-report/
+            ${{ env.LAB }}/test-results/
+          retention-days: 7
+          if-no-files-found: ignore
