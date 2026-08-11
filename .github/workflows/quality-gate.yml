@@ -21,6 +21,10 @@ env:
   LAB: tutorial_11_page_object_lab
   NODE_VERSION: '24'
   API_LEVEL: '34'
+  # The lab's `autoDiscover` global setup resolves devices for every project in the config —
+  # including ones `--project` excluded — so the ios project would fail on a Linux runner that
+  # has no simulators. The lab config trims it when this is set. See its taqwright.config.ts.
+  TAQWRIGHT_ANDROID_ONLY: '1'
 
 jobs:
   typecheck:
