@@ -187,7 +187,7 @@ nvm install 24 && nvm use 24 && nvm alias default 24
 
 npm init taqwright              # scaffold a new project (config, tsconfig, example spec)
 # …or add taqwright to an existing project:
-npm i -D @taqwright/taqwright@beta
+npm i -D @taqwright/taqwright
 ```
 
 <span class="small">`taqwright doctor` **errors** below Node 24; every other check is a soft warn. 📦 Package is **`@taqwright/taqwright`** — our labs alias it to `taqwright` so `import … from 'taqwright'` + `npx taqwright` both work.</span>
@@ -300,7 +300,7 @@ npx taqwright init my-app \
 A **pre-flight check** of the whole mobile toolchain before you run a test.
 
 ```text
-taqwright doctor (v0.1.0-beta.1)
+taqwright doctor (v1.0.0)
   [ok] Node.js 24+                 — v24.15.0
   [ok] adb (Android SDK)           — on PATH
   [ok] ANDROID_HOME                — …/Library/Android/sdk
