@@ -37,7 +37,7 @@ npm install
 > 📦 The package is **`@taqwright/taqwright`**. This lab's `package.json` aliases it to
 > `taqwright` (`"taqwright": "npm:@taqwright/taqwright@..."`) so the docs' `import … from
 > 'taqwright'` and `npx taqwright` both work verbatim. Starting from scratch instead?
-> `npm init taqwright` (scaffold) or `npm i -D @taqwright/taqwright@beta` (add to a project).
+> `npm init taqwright` (scaffold) or `npm i -D @taqwright/taqwright` (add to a project).
 
 ## 2 · Provision the toolchain ⚙️
 

@@ -120,6 +120,18 @@ plus your **own** app upload (see the table above); the `bs://…` ids in that c
 The `taqwright` skill is the authoritative reference for the `mobile` API, locator priority,
 config, and `lime-cli`.
 
+## CI quality gate
+
+[`.github/workflows/quality-gate.yml`](.github/workflows/quality-gate.yml) runs on every PR:
+it typechecks `tutorial_11_page_object_lab/`, then runs that lab's `add-to-cart.spec.ts` on a
+real **Android emulator** (API 34, x86_64) on the GitHub runner — same command you run locally,
+`npm run test:android`. Appium 3 + the uiautomator2 driver are installed from npm, the emulator
+comes from [`reactivecircus/android-emulator-runner`](https://github.com/ReactiveCircus/android-emulator-runner),
+and the app under test is the committed [`app/DemoApp-v1.0.0.apk`](app/). On failure the HTML
+report and traces are uploaded as a build artifact.
+
+iOS isn't gated — that needs a `macos` runner and a booted simulator.
+
 ## The slide deck
 
 The deck walks the **entire taqwright docs sidebar, top to bottom** — Part 1 *Getting started*

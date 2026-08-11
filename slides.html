@@ -808,7 +808,7 @@ nvm install 24 &amp;&amp; nvm use 24 &amp;&amp; nvm <span class="hljs-built_in">
 
 npm init taqwright              <span class="hljs-comment"># scaffold a new project (config, tsconfig, example spec)</span>
 <span class="hljs-comment"># …or add taqwright to an existing project:</span>
-npm i -D @taqwright/taqwright@beta
+npm i -D @taqwright/taqwright
 </code></pre>
 <p><span class="small"><code>taqwright doctor</code> <strong>errors</strong> below Node 24; every other check is a soft warn. <img class="emoji" draggable="false" alt="📦" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.3/assets/svg/1f4e6.svg" data-marp-twemoji=""/> Package is <strong><code>@taqwright/taqwright</code></strong> — our labs alias it to <code>taqwright</code> so <code>import … from 'taqwright'</code> + <code>npx taqwright</code> both work.</span></p>
 <footer>taqwright-tutorial · Taqelah</footer>
@@ -1106,7 +1106,7 @@ section::before {
 <header>taqwright — Playwright-style mobile testing on Appium 3</header>
 <h2 id="1--taqwright-doctor--is-my-machine-ready">1 · <code>taqwright doctor</code> — is my machine ready?</h2>
 <p>A <strong>pre-flight check</strong> of the whole mobile toolchain before you run a test.</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">taqwright doctor (v0.1.0-beta.1)
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-text">taqwright doctor (v1.0.0)
   [ok] Node.js 24+                 — v24.15.0
   [ok] adb (Android SDK)           — on PATH
   [ok] ANDROID_HOME                — …/Library/Android/sdk

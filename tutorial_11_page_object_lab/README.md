@@ -65,7 +65,14 @@ npm run test:android     # the SAME spec, Android page object
 npm run test:ios         # the SAME spec, iOS page object (macOS + simulator)
 npx taqwright test       # both projects
 npx taqwright test --list   # one spec listed under [android] AND [ios]
+
+TAQWRIGHT_ANDROID_ONLY=1 npm run test:android   # android project only (what CI runs)
 ```
+
+> **Why that env var?** `autoDiscover` resolves devices for **every** project in the config during
+> global setup — even the ones `--project` filtered out. On a machine with no iOS simulators (a
+> Linux CI runner) the `ios` project fails the run before the android spec starts, so
+> `TAQWRIGHT_ANDROID_ONLY=1` trims it out of the config. On your Mac, leave it unset.
 
 ## Why it's worth it
 
